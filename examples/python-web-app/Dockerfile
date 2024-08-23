@@ -5,13 +5,14 @@ WORKDIR /app
 COPY requirements.txt /app
 COPY devops /app
 
+ENV PIP_BREAK_SYSTEM_PACKAGES 1
+
 RUN apt-get update && \
-    apt-get install -y python3 python3-venv && \
-    python3 -m venv /venv && \
-    /venv/bin/pip install -r requirements.txt
+    apt-get install -y python3 python3-pip && \
+    pip install -r requirements.txt && \
     cd devops
-    
-ENTRYPOINT ["/venv/bin/python3"]
+
+ENTRYPOINT ["python3"]
 CMD ["manage.py", "runserver", "0.0.0.0:8000"]
 
 
